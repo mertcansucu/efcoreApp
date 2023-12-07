@@ -8,6 +8,12 @@ namespace efcoreApp.Data
 {
     public class DataContext: DbContext
     {
+        //options bilgisini dışardan almasını sağladım(Program.cs içinde oluşturduğum options)
+        public DataContext(DbContextOptions<DataContext> options): base(options)
+        {
+            
+        }
+
         //DataContext üzerinden ilgili tipler uygulama tarafından erişebilir ve veritabı tarafından senkorize edilebilir bir veri tabanı oluşturdum
         public DbSet<Course> Courses => Set<Course>();
         public DbSet<Student> Students => Set<Student>();
