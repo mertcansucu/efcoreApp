@@ -1,0 +1,32 @@
+@model Student
+
+<h2>Öğrenci Güncelleme</h2>
+<hr>
+
+<div class="row">
+    <div class="col-8">
+        <form asp-controller="Ogrenci" asp-action="Edit" method="post">
+            <input type="hidden" asp-for="StudentId"><!--bu bişgiyi ben hidden ile gizli alarak güncellemek istediğim öğrenci kimse onun id si alarak onun bilgilerini getirip günceleme yapıcam-->
+            <div class="mb-3">
+                <label asp-for="StudentAd" class="form-label">Öğrenci Adı</label>
+                <input asp-for="StudentAd" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label asp-for="StudentSoyad" class="form-label">Öğrenci Soyad</label>
+                <input asp-for="StudentSoyad" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label asp-for="Email" class="form-label">Eposta</label>
+                <input asp-for="Email" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label asp-for="Phone" class="form-label">Telefon</label>
+                <input asp-for="Phone" class="form-control">
+            </div>
+        
+            <button type="submit" class="btn btn-secondary">Kaydet</button>
+        
+        </form>
+    </div>
+</div>
+
