@@ -16,6 +16,30 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = C:\Users\Mert Can SUCU\OneDrive - Ataturk University\Masaüstü\efcoreApp
 build_property._RazorSourceGeneratorDebug = 
 
+[C:/Users/Mert Can SUCU/OneDrive - Ataturk University/Masaüstü/efcoreApp/Views/CourseRegistration/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ291cnNlUmVnaXN0cmF0aW9uXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mert Can SUCU/OneDrive - Ataturk University/Masaüstü/efcoreApp/Views/CourseRegistration/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ291cnNlUmVnaXN0cmF0aW9uXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mert Can SUCU/OneDrive - Ataturk University/Masaüstü/efcoreApp/Views/Course/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ291cnNlXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mert Can SUCU/OneDrive - Ataturk University/Masaüstü/efcoreApp/Views/Course/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ291cnNlXERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mert Can SUCU/OneDrive - Ataturk University/Masaüstü/efcoreApp/Views/Course/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ291cnNlXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mert Can SUCU/OneDrive - Ataturk University/Masaüstü/efcoreApp/Views/Course/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ291cnNlXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Mert Can SUCU/OneDrive - Ataturk University/Masaüstü/efcoreApp/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -34,6 +58,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/Mert Can SUCU/OneDrive - Ataturk University/Masaüstü/efcoreApp/Views/Student/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3R1ZGVudFxDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mert Can SUCU/OneDrive - Ataturk University/Masaüstü/efcoreApp/Views/Student/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3R1ZGVudFxEZWxldGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Mert Can SUCU/OneDrive - Ataturk University/Masaüstü/efcoreApp/Views/Student/Edit.cshtml]

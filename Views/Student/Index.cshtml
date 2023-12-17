@@ -1,7 +1,7 @@
 @model IEnumerable<Student>
 
 <h2>Öğrenci Listesi</h2>
-<a href="/Ogrenci/Create" class="btn btn-primary">Öğrenci Ekle</a>
+<a href="/Student/Create" class="btn btn-primary">Öğrenci Ekle</a>
 <hr>
 <table class="table table-bordered">
     <thead>
@@ -25,8 +25,8 @@
                 <td>@Html.DisplayFor(modelItem => item.StudentAd)</td>
                 <td>@Html.DisplayFor(modelItem => item.StudentSoyad)</td>
                 <td>
-                    <a asp-controller="Student" asp-action="edit" asp-route-id="@item.StudentId" class="btn btn-sm btn-primary">Edit</a><!--asp-route-id="@item.StudentId ile butona basınca edit sayfasına o kişinin id si gidecek ve onun bilgileri görünecek-->
-                    <a href="" class="btn btn-sm btn-danger">Delete</a>
+                    <a asp-controller="Student" asp-action="Edit" asp-route-id="@item.StudentId" class="btn btn-sm btn-primary">Edit</a><!--asp-route-id="@item.StudentId ile butona basınca edit sayfasına o kişinin id si gidecek ve onun bilgileri görünecek-->
+                    <a asp-controller="Student" asp-action="Delete" asp-route-id="@item.StudentId" class="btn btn-sm btn-danger">Delete</a>
                 </td>
             </tr>
         }

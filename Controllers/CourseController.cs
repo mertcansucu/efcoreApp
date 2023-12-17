@@ -8,24 +8,26 @@ using Microsoft.EntityFrameworkCore;
 
 namespace efcoreApp.Controllers
 {
-    public class StudentController: Controller
+    public class CourseController:Controller
     {
-        private readonly DataContext _context;//üretilen private bir değer
-
-        public StudentController(DataContext context){//konstraktır olarak tanımlanan değere eşitlener controller kullanılır buna mvc injection denir
+        private readonly DataContext _context;
+        public CourseController(DataContext context)
+        {
             _context = context;
         }
-
-        public async Task<IActionResult> Index(){//index html sayfasında veritabındaki kayıtlı öğrenci bilgilerinin gösterilmesi
-            return View(await _context.Students.ToListAsync());
+        
+        public async Task<IActionResult> Index(){
+            var courses = await _context.Courses.ToListAsync();
+            return View(courses);
         }
 
         public IActionResult Create(){//ekleme ekranı tasarım
             return View();
         }
 
-        [HttpPost] //form action (yeni eklenen öğrenci bilgilerinin çelilmesi)
-        public async Task<IActionResult> Create(Student model){
+        [HttpPost] //form action (yeni eklenen kurs bilgilerinin çelilmesi)
+        [ValidateAntiForgeryToken]//burayı get eden ve post eden kişinin aynı kişi olup olamdığını kontrol et dedim çünkü başka biri girip bilgileri kullanıp veya kendi güncelleme yapabilir
+        public async Task<IActionResult> Create(Course model){
             //veri tabanı bağlantıları sekron ve asekron şeklinde oluyor,ama veri tabanında asekron(async) kullanıyoruz
             /*
             async => lokanta mantığı siparişleri alır ve sırası gelen siparişi alır
@@ -33,7 +35,7 @@ namespace efcoreApp.Controllers
             */
 
             //üste controller ile bağlantı sağlayıp o bilgileri kullanarak ekleme yapıcam
-            _context.Students.Add(model);
+            _context.Courses.Add(model);
             await _context.SaveChangesAsync();//kaydetme olduğu için sıraya alınsın diye bekleme yaptırdım
             return RedirectToAction("Index");//yeni kayıt eklendiğinde student/index e gönderdim
         }
@@ -45,22 +47,22 @@ namespace efcoreApp.Controllers
                 return NotFound();
             }
 
-           var std = await _context.Students.FindAsync(id); //bu sadece id için yapar 
+           var course = await _context.Courses.FindAsync(id); //bu sadece id için yapar 
 
             // var std = await _context.Students.FirstOrDefaultAsync(s => s.StudentId == id);diğer değerler içinde kontrol edebiliriz kontrol eder
 
-            if (std == null)
+            if (course == null)
             {
                 return NotFound();
             }
 
-            return View(std);
+            return View(course);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]//burayı get eden ve post eden kişinin aynı kişi olup olamdığını kontrol et dedim çünkü başka biri girip bilgileri kullanıp veya kendi güncelleme yapabilir
-        public async Task<IActionResult> Edit(int id, Student model){
-            if (id != model.StudentId)
+        public async Task<IActionResult> Edit(int id, Course model){
+            if (id != model.CourseId)
             {
                 NotFound();
             }
@@ -72,9 +74,9 @@ namespace efcoreApp.Controllers
                     _context.Update(model);
                     await _context.SaveChangesAsync();//güncelleme bu bölümde oluyor üste bilgileri alıyorum ama veri tabanıunda güncelleme burdan oluyor
                 }
-                catch (DbUpdateConcurrencyException)//eğer bir hata varsa bu bölüme geç dedim
+                catch (DbUpdateException)//DbUpdateConcurrencyException yerine diğerini kullandım ikiside kullanıyor bu kullandığım daha genel bir şey,eğer bir hata varsa bu bölüme geç dedim
                 {
-                    if(!_context.Students.Any(o => o.StudentId == model.StudentId))//id kontrolu yaptım eğer eşit değilse hata verdirdim
+                    if(!_context.Courses.Any(o => o.CourseId == model.CourseId))//id kontrolu yaptım eğer eşit değilse hata verdirdim
                     {
                         return NotFound();
                     }else
@@ -87,7 +89,7 @@ namespace efcoreApp.Controllers
             return View(model);
         }
 
-        //Delete
+         //Delete
         [HttpGet]
         public async Task<IActionResult> Delete(int? id){
             
@@ -95,29 +97,29 @@ namespace efcoreApp.Controllers
                 return NotFound();
             }
 
-           var ogr = await _context.Students.FindAsync(id);
+           var course = await _context.Courses.FindAsync(id);
 
-           if (ogr == null)
+           if (course == null)
            {
                 return NotFound();
            }
 
-           return View(ogr);
+           return View(course);
         }
 
         [HttpPost]
         public async Task<IActionResult> Delete([FromForm]int id)//fromform dememin nedeni ordaki id bilgisini al dedim başka yerdeki bilgitide diyip alablirdim bunların detaylı bilbisi .net mdel binding dökümantasyonunda,bunun diğer yolu üsteki gibi edit işleminde yaptım buda diğer yol
         {
-            var ogr = await _context.Students.FindAsync(id);
-            if (ogr == null)
+            var course = await _context.Courses.FindAsync(id);
+            if (course == null)
             {
                 return NotFound();
             }
 
-            _context.Students.Remove(ogr);//silmek istediğm bilgiyi aldım
+            _context.Courses.Remove(course);//silmek istediğm bilgiyi aldım
             await _context.SaveChangesAsync();//veritabından sildim
             return RedirectToAction("Index");
         }
-        
+
     }
 }
