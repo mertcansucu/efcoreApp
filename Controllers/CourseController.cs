@@ -30,7 +30,7 @@ namespace efcoreApp.Controllers
 
         [HttpPost] //form action (yeni eklenen kurs bilgilerinin çelilmesi)
         [ValidateAntiForgeryToken]//burayı get eden ve post eden kişinin aynı kişi olup olamdığını kontrol et dedim çünkü başka biri girip bilgileri kullanıp veya kendi güncelleme yapabilir
-        public async Task<IActionResult> Create(Course model){
+        public async Task<IActionResult> Create(CourseViewModel model){
             //veri tabanı bağlantıları sekron ve asekron şeklinde oluyor,ama veri tabanında asekron(async) kullanıyoruz
             /*
             async => lokanta mantığı siparişleri alır ve sırası gelen siparişi alır
@@ -38,9 +38,13 @@ namespace efcoreApp.Controllers
             */
 
             //üste controller ile bağlantı sağlayıp o bilgileri kullanarak ekleme yapıcam
-            _context.Courses.Add(model);
-            await _context.SaveChangesAsync();//kaydetme olduğu için sıraya alınsın diye bekleme yaptırdım
-            return RedirectToAction("Index");//yeni kayıt eklendiğinde student/index e gönderdim
+            if(ModelState.IsValid){//bunu ekleme nedenim alan boş olursa çalışmasın yani hoca seçimi yapma zorunluluğunu yaptım yapmazsa hata verecek
+                _context.Courses.Add(new Course() {CourseId = model.CourseId,Title = model.Title,TeacherId = model.TeacherId });
+                await _context.SaveChangesAsync();//kaydetme olduğu için sıraya alınsın diye bekleme yaptırdım
+                return RedirectToAction("Index");//yeni kayıt eklendiğinde student/index e gönderdim
+            }
+            ViewBag.Teachers = new SelectList(await _context.Teachers.ToListAsync(),"TeacherId","TeachertAdSoyad");//öğretmen seçimi için öğretmenleride ekledim
+            return View(model);
         }
 
         //edit
@@ -103,6 +107,7 @@ namespace efcoreApp.Controllers
                 }
                 return RedirectToAction("Index");
             }
+            ViewBag.Teachers = new SelectList(await _context.Teachers.ToListAsync(),"TeacherId","TeachertAdSoyad");//öğretmen seçimi için öğretmenleride ekledim
             return View(model);
         }
 

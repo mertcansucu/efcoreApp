@@ -5,6 +5,7 @@
 <div class="row">
     <div class="col-8">
         <form asp-controller="Course" asp-action="Edit" method="post">
+            <div asp-validation-summary="All"></div><!--hataları göstersin diye-->
             <input type="hidden" asp-for="CourseId">
             <div class="mb-3">
                 <label asp-for="Title" class="form-label">Başlık</label>
