@@ -1,0 +1,36 @@
+@model Teacher
+
+<h2>Öğretmeen Güncelleme</h2>
+<hr>
+
+<div class="row">
+    <div class="col-8">
+        <form asp-controller="Teacher" asp-action="Edit" method="post">
+            <input type="hidden" asp-for="TeacherId">
+            <div class="mb-3">
+                <label asp-for="TeacherAd" class="form-label">Öğretmen Adı</label>
+                <input asp-for="TeacherAd" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label asp-for="TeacherSoyad" class="form-label">Öğretmen Soyad</label>
+                <input asp-for="TeacherSoyad" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label asp-for="Email" class="form-label">Eposta</label>
+                <input asp-for="Email" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label asp-for="Phone" class="form-label">Telefon</label>
+                <input asp-for="Phone" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label asp-for="StartingDate" class="form-label">Başlama Tarihi</label>
+                <input asp-for="StartingDate" class="form-control">
+            </div>
+        
+            <button type="submit" class="btn btn-secondary">Kaydet</button>
+        
+        </form>
+    </div>
+</div>
+

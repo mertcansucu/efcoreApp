@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using efcoreApp.Data;
+using efcoreApp.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace efcoreApp.Controllers
@@ -17,11 +19,12 @@ namespace efcoreApp.Controllers
         }
         
         public async Task<IActionResult> Index(){
-            var courses = await _context.Courses.ToListAsync();
+            var courses = await _context.Courses.Include(k=> k.Teacher).ToListAsync();
             return View(courses);
         }
 
-        public IActionResult Create(){//ekleme ekranı tasarım
+        public async Task<IActionResult> Create(){//ekleme ekranı tasarım
+            ViewBag.Teachers = new SelectList(await _context.Teachers.ToListAsync(),"TeacherId","TeachertAdSoyad");//öğretmen seçimi için öğretmenleride ekledim
             return View();
         }
 
@@ -47,7 +50,19 @@ namespace efcoreApp.Controllers
                 return NotFound();
             }
 
-           var course = await _context.Courses.FindAsync(id); //bu sadece id için yapar 
+           var course = await _context
+           .Courses
+           .Include(x => x.CourseRegistrations)//editte kurs kayıtları göstermek için inner join yaptım
+           .ThenInclude(x => x.Student)//üste kurs kayıt tablosuna gittim ama ordan da kursa gidip o veriyi almam için bunun içinde öğrenci ile kurs arasında başka bir join yapmam lazım onun içinde theninclude kullandım
+           .Select(k => new CourseViewModel{//burda yeni bir model içinde bir database oluşturup bilgileri ordan çektim çünkü kursa öğretmen atamasında hata almamak için
+                CourseId = k.CourseId,
+                Title = k.Title,
+                TeacherId = k.TeacherId,
+                CourseRegistrations = k.CourseRegistrations
+           })
+           .FirstOrDefaultAsync(x =>x.CourseId == id); 
+           
+           //FindAsync sadece id için yapar 
 
             // var std = await _context.Students.FirstOrDefaultAsync(s => s.StudentId == id);diğer değerler içinde kontrol edebiliriz kontrol eder
 
@@ -56,12 +71,14 @@ namespace efcoreApp.Controllers
                 return NotFound();
             }
 
+            ViewBag.Teachers = new SelectList(await _context.Teachers.ToListAsync(),"TeacherId","TeachertAdSoyad");//öğretmen seçimi için öğretmenleride ekledim
+
             return View(course);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]//burayı get eden ve post eden kişinin aynı kişi olup olamdığını kontrol et dedim çünkü başka biri girip bilgileri kullanıp veya kendi güncelleme yapabilir
-        public async Task<IActionResult> Edit(int id, Course model){
+        public async Task<IActionResult> Edit(int id, CourseViewModel model){
             if (id != model.CourseId)
             {
                 NotFound();
@@ -71,7 +88,7 @@ namespace efcoreApp.Controllers
             {
                 try
                 {
-                    _context.Update(model);
+                    _context.Update(new Course() {CourseId = model.CourseId,Title = model.Title,TeacherId = model.TeacherId });
                     await _context.SaveChangesAsync();//güncelleme bu bölümde oluyor üste bilgileri alıyorum ama veri tabanıunda güncelleme burdan oluyor
                 }
                 catch (DbUpdateException)//DbUpdateConcurrencyException yerine diğerini kullandım ikiside kullanıyor bu kullandığım daha genel bir şey,eğer bir hata varsa bu bölüme geç dedim

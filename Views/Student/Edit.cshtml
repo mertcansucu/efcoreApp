@@ -28,5 +28,22 @@
         
         </form>
     </div>
+    <div class="col-4">
+        <h4>Kurslar</h4>
+        <hr>
+        <ul>
+            @foreach(var item in @Model.CourseRegistrations)
+            {
+                <li>@item.Course.Title</li>
+                <!--
+                    bura ben CourseRegistration.cs içine eriştim ve ordan istediğim her şeyi yazdırabilirim ama orda,
+                    public Course Course { get; set; } = null! bu bilgide title yok onun için burdan course içine girip ordan course.cs ye gidip onun içindeki title çağırdım, ama bunu gerçekleştirmek içinde ekstradan join işlemini controller da inculude işlemi ile hem course yi hemde CourseRegistration eklersem görünür.
+                -->
+            }
+        </ul>
+        <!--burdaki döngü student.cs içinde oluşturduğum yeni prop ile öğrenciye ait kurs bilgilerini gösterdim
+            public ICollection<CourseRegistration> CourseRegistrations { get; set; } = new List<CourseRegistration>();//bunu eklememin nedeni öğrenci tablosundan detaya(edite)bastığımda o öğrencinin aldığı kursları görmek
+        -->
+    </div>
 </div>
 

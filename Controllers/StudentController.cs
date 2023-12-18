@@ -45,8 +45,13 @@ namespace efcoreApp.Controllers
                 return NotFound();
             }
 
-           var std = await _context.Students.FindAsync(id); //bu sadece id için yapar 
-
+           var std = await _context
+                    .Students
+                    .Include(x => x.CourseRegistrations)//editte kurs kayıtları göstermek için inner join yaptım
+                    .ThenInclude(x => x.Course)//üste kurs kayıt tablosuna gittim ama ordan da kursa gidip o veriyi almam için bunun içinde öğrenci ile kurs arasında başka bir join yapmam lazım onun içinde theninclude kullandım
+                    .FirstOrDefaultAsync(x => x.StudentId == id); 
+           
+           //FindAsync(id) sadece id için yapar 
             // var std = await _context.Students.FirstOrDefaultAsync(s => s.StudentId == id);diğer değerler içinde kontrol edebiliriz kontrol eder
 
             if (std == null)

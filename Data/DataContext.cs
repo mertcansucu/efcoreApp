@@ -18,6 +18,7 @@ namespace efcoreApp.Data
         public DbSet<Course> Courses => Set<Course>();
         public DbSet<Student> Students => Set<Student>();
         public DbSet<CourseRegistration> CourseRegistrations => Set<CourseRegistration>();
+        public DbSet<Teacher> Teachers => Set<Teacher>();
     }
     //database erişimin iki yolu var biri code ile diğeri elle hazırlanan database entegre etmek proje ilde ben burda coe ile yapıcam (code-first)
 

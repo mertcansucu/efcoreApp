@@ -1,0 +1,39 @@
+@model IEnumerable<Teacher>
+
+    <h2>Öğretmen Listesi</h2>
+    <a href="/Teacher/Create" class="btn btn-primary">Öğretmen Ekle</a>
+    <hr>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <!-- bu şekilde de yapabilirim helper ile yaptım aşağıda
+                    <th>Teacher Id</th><model ismini alır
+                <th>Teacher Adı</th>
+                <th>Teacher Soyadı</th>
+                -->
+                <th>@Html.DisplayNameFor(m => m.TeacherId)</th><!--DisplayNameFor(student.cs veritabanında oluşturduğum tablonun)=>model ismini alır-->
+                <th>@Html.DisplayNameFor(m => m.TeacherAd)</th>
+                <th>@Html.DisplayNameFor(m => m.TeacherSoyad)</th>
+                <th>@Html.DisplayNameFor(m => m.StartingDate)</th>
+                <th style="width: 150px;"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var item in Model){
+                <tr>
+                    <!--<td>@item.TeacherAd</td> eski yöntem-->
+                    <td>@Html.DisplayFor(modelItem => item.TeacherId)</td><!--DisplayFor=>değerlerini alı alır-->
+                    <td>@Html.DisplayFor(modelItem => item.TeacherAd)</td>
+                    <td>@Html.DisplayFor(modelItem => item.TeacherSoyad)</td>
+                    <td>@Html.DisplayFor(modelItem => item.StartingDate)</td>
+                    <td>
+                        <a asp-controller="Teacher" asp-action="Edit" asp-route-id="@item.TeacherId" class="btn btn-sm btn-primary">Edit</a><!--asp-route-id="@item.TeacherId ile butona basınca edit sayfasına o kişinin id si gidecek ve onun bilgileri görünecek-->
+                        <a asp-controller="Teacher" asp-action="Delete" asp-route-id="@item.TeacherId" class="btn btn-sm btn-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+            
+        </tbody>
+    </table>
+    
+    
